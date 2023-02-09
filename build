@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+
+BUILD_PLAN="iosevka-custom"
+
+mkdir -p Iosevka && cd Iosevka
+git pull 2>/dev/null || git clone https://github.com/be5invis/Iosevka . --depth 1
+
+cp ../private-build-plans.toml .
+
+npm install
+npm run build -- ttf::$BUILD_PLAN
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+  cp dist/$BUILD_PLAN/ttf/*.ttf ~/Library/Fonts/
+fi
+
+echo "Built $BUILD_PLAN $(git describe --tags)"
