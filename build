@@ -4,7 +4,7 @@ set -e
 BUILD_PLAN="iosevka-custom"
 
 mkdir -p Iosevka && cd Iosevka
-git pull 2>/dev/null || git clone https://github.com/be5invis/Iosevka . --depth 1
+git pull 2>/dev/null || git clone https://github.com/be5invis/Iosevka . --depth 16
 
 cp ../private-build-plans.toml .
 
