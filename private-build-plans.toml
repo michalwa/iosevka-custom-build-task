@@ -15,6 +15,7 @@ asterisk = "penta-low"
 paren = "flat-arc"
 ampersand = "upper-open"
 bar = "force-upright"
+lig-equal-chain = "without-notch"
 
 [buildPlans.iosevka-custom.ligations]
 inherits = "default-calt"
