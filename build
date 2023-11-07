@@ -5,7 +5,9 @@ BUILD_PLAN="iosevka-custom"
 IOSEVKA_VERSION="v27.3.4"
 FORMAT=${1:-ttf}
 
-mkdir -p Iosevka && cd Iosevka
+mkdir -p Iosevka
+cd Iosevka
+
 if ! git pull 2>/dev/null ; then
   git clone https://github.com/be5invis/Iosevka . --depth 1 --branch $IOSEVKA_VERSION
 fi
