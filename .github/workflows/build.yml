@@ -6,6 +6,6 @@ jobs:
       - uses: actions/checkout@v4
       - run: ./build
       - uses: actions/upload-artifact@v3
-	with:
-	  name: ttf
-	  path: /Iosevka/dist/iosevka-custom/ttf/
+        with:
+          name: ttf
+          path: /Iosevka/dist/iosevka-custom/ttf/
