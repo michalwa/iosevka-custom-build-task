@@ -8,7 +8,7 @@ FORMAT=${1:-ttf}
 mkdir -p Iosevka
 cd Iosevka
 
-if [[ -f package.json ]] ; then
+if [[ -f package.json ]]; then
   git pull 2>/dev/null
 else
   git clone https://github.com/be5invis/Iosevka . --depth 1 --branch $IOSEVKA_VERSION
