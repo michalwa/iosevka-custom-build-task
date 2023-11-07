@@ -1,0 +1,12 @@
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y ttfautohint
+      - run: ./build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ttf
+          path: /Iosevka/dist/iosevka-custom/ttf/
