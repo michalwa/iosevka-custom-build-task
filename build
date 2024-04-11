@@ -9,7 +9,8 @@ mkdir -p Iosevka
 cd Iosevka
 
 if [[ -f package.json ]]; then
-  git pull 2>/dev/null
+  git fetch --tags
+  git checkout tags/$IOSEVKA_VERSION
 else
   git clone https://github.com/be5invis/Iosevka . --depth 1 --branch $IOSEVKA_VERSION
 fi

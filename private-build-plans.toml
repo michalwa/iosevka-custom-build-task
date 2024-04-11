@@ -20,3 +20,20 @@ lig-equal-chain = "without-notch"
 [buildPlans.iosevka-custom.ligations]
 inherits = "default-calt"
 disables = ["llgg"]
+
+[buildPlans.iosevka-custom.slopes.upright]
+angle = 0
+shape = "upright"
+menu = "upright"
+css = "normal"
+
+[buildPlans.iosevka-custom.slopes.italic]
+angle = 9.4
+shape = "italic"
+menu = "italic"
+css = "italic"
+
+[buildPlans.iosevka-custom.widths.normal]
+shape = 500
+menu = 5
+css = "normal"
