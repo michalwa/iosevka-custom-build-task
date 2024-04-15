@@ -18,6 +18,11 @@ ampersand = "upper-open"
 bar = "force-upright"
 lig-equal-chain = "without-notch"
 
+[buildPlans.IosevkaCustom.variants.italic]
+f = "tailed"
+l = "tailed-serifed"
+t = "bent-hook"
+
 [buildPlans.IosevkaCustom.widths.Normal]
 shape = 500
 menu = 5
