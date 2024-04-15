@@ -1,18 +1,18 @@
 #!/bin/bash
 set -e
 
-BUILD_PLAN="iosevka-custom"
-IOSEVKA_VERSION="v27.3.4"
-FORMAT=${1:-ttf}
+BUILD_PLAN=${BUILD_PLAN:-IosevkaCustom}
+VERSION=${VERSION:-v29.2.0}
+FORMAT=${FORMAT:-ttf}
 
 mkdir -p Iosevka
 cd Iosevka
 
 if [[ -f package.json ]]; then
-  git fetch --tags
-  git checkout tags/$IOSEVKA_VERSION
+  git fetch origin tags/$VERSION
+  git checkout tags/$VERSION
 else
-  git clone https://github.com/be5invis/Iosevka . --depth 1 --branch $IOSEVKA_VERSION
+  git clone https://github.com/be5invis/Iosevka . --depth 1 --branch $VERSION
 fi
 
 cp ../private-build-plans.toml .
@@ -20,8 +20,11 @@ cp ../private-build-plans.toml .
 npm install
 npm run build -- $FORMAT::$BUILD_PLAN
 
-if [[ $FORMAT == 'ttf' ]] && [[ $OSTYPE == 'darwin'* ]]; then
-  cp dist/$BUILD_PLAN/ttf/*.ttf ~/Library/Fonts/
-fi
-
 echo -e "\nBuilt $BUILD_PLAN $(git describe --tags)"
+
+if [[ $FORMAT == 'ttf' ]] && [[ $OSTYPE == 'darwin'* ]]; then
+  echo Install by running:
+  echo
+  echo "    cp Iosevka/dist/$BUILD_PLAN/ttf/*.ttf ~/Library/Fonts/"
+  echo
+fi
