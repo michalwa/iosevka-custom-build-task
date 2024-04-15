@@ -46,6 +46,8 @@ noLigation = true
 
 [buildPlans.IosevkaCustomQuasiProportional.variants.design]
 capital-g = "toothless-rounded-serifless-hooked"
+capital-i = "serifless"
+i = "serifed-flat-tailed"
 l = "flat-tailed"
 t = "flat-hook"
 u = "toothless-rounded-serifless"
