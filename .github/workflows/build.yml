@@ -9,4 +9,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: ttf
-          path: Iosevka/dist/IosevkaCustom/ttf/
+          path: Iosevka/dist/IosevkaCustom/TTF/
