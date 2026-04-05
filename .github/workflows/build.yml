@@ -22,16 +22,19 @@ jobs:
         with:
           name: ${{ matrix.build-plan }}-ttf
           path: Iosevka/dist/${{ matrix.build-plan }}/TTF/
-      - uses: actions/download-artifact@v8
-        with:
-          name: ${{ matrix.build-plan }}-ttf
-          path: ttf
-          skip-decompress: true
 
   release:
     needs: build
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
+      - uses: actions/checkout@v6
+      - name: Download artifacts
+        run: |
+          gh run download -D ttf \
+            -n IosevkaCustom-ttf \
+            -n IosevkaCustomQuasiProportional-ttf
       - uses: softprops/action-gh-release@v2
         with:
           files: ttf/*
