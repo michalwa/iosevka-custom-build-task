@@ -5,50 +5,33 @@ on:
       - '*'
 
 jobs:
-  build-IosevkaCustom:
+  build:
+    strategy:
+      matrix:
+        build-plan:
+          - IosevkaCustom
+          - IosevkaCustomQuasiProportional
     runs-on: ubuntu-latest
     env:
-      BUILD_PLAN: IosevkaCustom
+      BUILD_PLAN: ${{ matrix.build-plan }}
     steps:
       - uses: actions/checkout@v6
       - run: sudo apt-get install -y ttfautohint
       - run: ./build
       - uses: actions/upload-artifact@v4
         with:
-          name: IosevkaCustom-ttf
-          path: Iosevka/dist/IosevkaCustom/TTF/
-
-  build-IosevkaCustomQuasiProportional:
-    runs-on: ubuntu-latest
-    env:
-      BUILD_PLAN: IosevkaCustomQuasiProportional
-    steps:
-      - uses: actions/checkout@v6
-      - run: sudo apt-get install -y ttfautohint
-      - run: ./build
-      - uses: actions/upload-artifact@v4
+          name: ${{ matrix.build-plan }}-ttf
+          path: Iosevka/dist/${{ matrix.build-plan }}/TTF/
+      - uses: actions/download-artifact@v4
         with:
-          name: IosevkaCustomQuasiProportional-ttf
-          path: Iosevka/dist/IosevkaCustomQuasiProportional/TTF/
+          name: ${{ matrix.build-plan }}
+          path: ttf
+          skip-decompress: true
 
   release:
-    needs: [build-IosevkaCustom, build-IosevkaCustomQuasiProportional]
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download IosevkaCustom
-        uses: actions/download-artifact@v4
+      - uses: softprops/action-gh-release@v2
         with:
-          name: IosevkaCustom-ttf
-          path: ttf/IosevkaCustom
-      - name: Download IosevkaCustomQuasiProportional
-        uses: actions/download-artifact@v4
-        with:
-          name: IosevkaCustomQuasiProportional-ttf
-          path: ttf/IosevkaCustomQuasiProportional
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          working_directory: ttf
-          files: |
-            IosevkaCustom/*
-            IosevkaCustomQuasiProportional/*
+          files: ttf/*
