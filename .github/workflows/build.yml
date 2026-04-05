@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        build-plan:
+          - IosevkaCustom
+          - IosevkaCustomQuasiProportional
+    runs-on: ubuntu-latest
+    env:
+      BUILD_PLAN: ${{ matrix.build-plan }}
+    steps:
+      - uses: actions/checkout@v6
+      - run: sudo apt-get install -y ttfautohint
+      - run: ./build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.build-plan }}-ttf
+          path: Iosevka/dist/${{ matrix.build-plan }}/TTF/
+      - uses: actions/download-artifact@v8
+        with:
+          name: ${{ matrix.build-plan }}-ttf
+          path: ttf
+          skip-decompress: true
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: ttf/*
