@@ -24,7 +24,7 @@ jobs:
           path: Iosevka/dist/${{ matrix.build-plan }}/TTF/
       - uses: actions/download-artifact@v8
         with:
-          name: ${{ matrix.build-plan }}
+          name: ${{ matrix.build-plan }}-ttf
           path: ttf
           skip-decompress: true
 
