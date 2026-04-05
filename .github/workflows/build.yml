@@ -4,37 +4,30 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    strategy:
-      matrix:
-        build-plan:
-          - IosevkaCustom
-          - IosevkaCustomQuasiProportional
     runs-on: ubuntu-latest
-    env:
-      BUILD_PLAN: ${{ matrix.build-plan }}
     steps:
       - uses: actions/checkout@v6
       - run: sudo apt-get install -y ttfautohint
       - run: ./build
       - uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.build-plan }}-ttf
-          path: Iosevka/dist/${{ matrix.build-plan }}/TTF/
+          name: IosevkaCustom-ttf
+          path: Iosevka/dist/*/TTF/
 
   release:
+    if: github.ref_type == 'tag'
     needs: build
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v6
-      - name: Download artifacts
-        run: |
-          gh run download -D ttf \
-            -n IosevkaCustom-ttf \
-            -n IosevkaCustomQuasiProportional-ttf
+      - uses: actions/download-artifact@v8
+        with:
+          name: IosevkaCustom-ttf
+          skip-decompress: true
       - uses: softprops/action-gh-release@v2
         with:
-          files: ttf/*
+          files: IosevkaCustom-ttf.zip
